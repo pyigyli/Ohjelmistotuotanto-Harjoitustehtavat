@@ -26,7 +26,6 @@ public class InMemoryUserDao implements UserDao {
         return user;
       }
     }
-
     return null;
   }
 

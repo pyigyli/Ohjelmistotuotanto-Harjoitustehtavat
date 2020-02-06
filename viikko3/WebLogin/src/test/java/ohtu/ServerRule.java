@@ -6,25 +6,24 @@ import org.junit.rules.ExternalResource;
 import spark.Spark;
 
 public class ServerRule extends ExternalResource {
-    
-    private final int port;
 
-    public ServerRule(int port) {
-        this.port = port;
-    }
+  private final int port;
 
-    @Override
-    protected void before() throws Throwable {
-        Spark.port(port);
-        UserDao dao = new UserDaoForTests();
-        dao.add(new User("jukka", "akkuj"));
-        Main.setDao(dao);
-        Main.main(null);
-    }
+  public ServerRule(int port) {
+    this.port = port;
+  }
 
-    @Override
-    protected void after() {
-        Spark.stop();
-    }
-    
+  @Override
+  protected void before() throws Throwable {
+    Spark.port(this.port);
+    UserDao dao = new UserDaoForTests();
+    dao.add(new User("jukka", "akkuj"));
+    Main.setDao(dao);
+    Main.main(null);
+  }
+
+  @Override
+  protected void after() {
+    Spark.stop();
+  }
 }

@@ -1,4 +1,3 @@
-
 package ohtu;
 
 import java.util.ArrayList;
@@ -8,38 +7,37 @@ import ohtu.domain.User;
 
 public class UserDaoForTests implements UserDao {
 
-    private List<User> users;
+  private List<User> users;
 
-    public UserDaoForTests() {
-        this.users = new ArrayList<>();
+  public UserDaoForTests() {
+    this.users = new ArrayList<>();
+  }
+
+  @Override
+  public List<User> listAll() {
+    return this.users;
+  }
+
+  @Override
+  public User findByName(String name) {
+    for (User user : users) {
+      if (user.getUsername().equals(name)) {
+        return user;
+      }
     }
+    return null;
+  }
 
-    @Override
-    public List<User> listAll() {
-        return users;
-    }
+  @Override
+  public void add(User user) {
+    this.users.add(user);
+  }
 
-    @Override
-    public User findByName(String name) {
-        for (User user : users) {
-            if (user.getUsername().equals(name)) {
-                return user;
-            }
-        }
+  public void setUsers(List<User> users) {
+    this.users = users;
+  }
 
-        return null;
-    }
-
-    @Override
-    public void add(User user) {
-        users.add(user);
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
+  public List<User> getUsers() {
+    return this.users;
+  }
 }

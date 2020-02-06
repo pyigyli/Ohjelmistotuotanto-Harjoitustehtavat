@@ -81,7 +81,7 @@ public class Main {
     Main.dao = dao;
   }
 
-  public static AuthenticationService authenticationService(){
+  public static AuthenticationService authenticationService() {
     if (dao == null) {
       dao = new FileUserDao("salasanat.txt");  
     } if (authService == null) {

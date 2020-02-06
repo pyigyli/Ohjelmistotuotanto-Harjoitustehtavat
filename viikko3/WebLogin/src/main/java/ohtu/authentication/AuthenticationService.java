@@ -3,6 +3,7 @@ package ohtu.authentication;
 import ohtu.data_access.UserDao;
 import ohtu.domain.User;
 import ohtu.util.CreationStatus;
+import java.nio.CharBuffer;
 
 public class AuthenticationService {
 
@@ -26,8 +27,17 @@ public class AuthenticationService {
     if (this.userDao.findByName(username) != null) {
       status.addError("username is already taken");
     }
-    if (username.length()<3 ) {
+    if (username.length() < 3) {
       status.addError("username should have at least 3 characters");
+    }
+    if (password.length() < 8) {
+      status.addError("password should have at least 8 characters");
+    }
+    if (CharBuffer.wrap(password.toCharArray()).chars().filter(c -> !Character.isLetter(c)).toArray().length == 0) {
+      status.addError("password should contain one number or special character");
+    }
+    if (!password.equals(passwordConfirmation)) {
+      status.addError("password and password confirmation do not match");
     }
     if (status.isOk()) {
       this.userDao.add(new User(username, password));
